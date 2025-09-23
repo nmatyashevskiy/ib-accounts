@@ -161,6 +161,7 @@ def get_data(Rep_name):
     All_Accounts['Meters Placed'] = All_Accounts['Meters Placed'].astype('int')
     All_Accounts = All_Accounts.merge(orders_count[['Account ID','# Orders']], on = 'Account ID', how = 'left') 
     All_Accounts['# Orders'] = All_Accounts['# Orders'].fillna(0)
+    All_Accounts['# Orders'] = All_Accounts['# Orders'].astype(int)
     All_Accounts = All_Accounts.merge(orders_last[['Account ID','Last Order']], on = 'Account ID', how = 'left')
 
     data = All_Accounts.reset_index(drop=True)
@@ -305,4 +306,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
