@@ -41,7 +41,7 @@ def display_map(df):
         meters = df.at[i, 'Meters Placed']
         orders = df.at[i, '# Orders']
         last_order = df.at[i, 'Last Order']
-        days_vo_visits = df.at[i, 'Days vo Visits']
+        days_vo_visits = df.at[i, 'Days wo Visits']
 
         if segment == 'Hunter':
             color = 'lightblue'
@@ -62,7 +62,7 @@ def display_map(df):
                 <b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
                 <em style="color:gray;font-family:verdana;font-size:80%;">Coverage: </em><b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
                 <em style="color:gray;font-family:verdana;font-size:80%;">Last visited date: </em><b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
-                <em style="color:gray;font-family:verdana;font-size:80%;">Days vo Visits: </em><b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
+                <em style="color:gray;font-family:verdana;font-size:80%;">Days wo Visits: </em><b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
                 <em style="color:gray;font-family:verdana;font-size:80%;">Meters Placed YTD: </em><b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
                 <em style="color:gray;font-family:verdana;font-size:80%;"># Orders: </em><b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
                 <em style="color:gray;font-family:verdana;font-size:80%;">Last Order: </em><b style="color:gray;font-family:verdana;font-size:80%;">{}</b><br>
@@ -142,7 +142,7 @@ def get_data(Rep_name):
     All_Accounts['Last Visit new'] = All_Accounts['Last Visit new'].dt.date
     All_Accounts['Last Visit new'] = All_Accounts['Last Visit new'].fillna(0)
     today = date.today()
-    All_Accounts['Days vo Visits'] = All_Accounts['Last Visit new'].map(lambda x: (today - pd.to_datetime(x).date()).days)
+    All_Accounts['Days wo Visits'] = All_Accounts['Last Visit new'].map(lambda x: (today - pd.to_datetime(x).date()).days)
     All_Accounts['Call Rate'] = All_Accounts['# Visits'].map(lambda x: str(int(x))) + "/" + All_Accounts['Call Target'].map(lambda x: str(int(x)))
     All_Accounts['Coverage'] = All_Accounts['# Visits'] / All_Accounts['Call Target']
     All_Accounts['Visited'] = All_Accounts['# Visits'].map(lambda x: "Yes" if x > 0 else "No")
@@ -175,7 +175,7 @@ def get_data(Rep_name):
        'Account Type', 'Account Segment', 'Brick Code', 'Brick Description',
        'Primary State/Province', 'Primary City', 'Primary Street',
        'Call Target', 'Lat', 'Lon', '# Visits', 'Last Visit',
-       'Days vo Visits', 'Call Rate', 'Coverage', 'Visited', 'Meters Placed',
+       'Days wo Visits', 'Call Rate', 'Coverage', 'Visited', 'Meters Placed',
        '# Orders', 'Last Order']]
     
     return data
@@ -260,10 +260,10 @@ def main():
                      &(df['Coverage'] <= int(end_coverage[:-1]) / 100)
                      &(df['Call Target'] >= target[0])
                      &(df['Call Target'] <= target[1])
-                     &(df['Days vo Visits'] > underserved)]
+                     &(df['Days wo Visits'] > underserved)]
     df_filtered = df_filtered[['Account ID', 'Account Owner', 'Account Name', 'Account Type', 'Account Segment', 
        'Call Target', '# Visits', 'Call Rate', 'Last Visit',
-       'Days vo Visits',  'Coverage', 'Visited',
+       'Days wo Visits',  'Coverage', 'Visited',
        'Meters Placed', '# Orders', 'Last Order',
        'Brick Code', 'Brick Description', 'Primary State/Province', 'Primary City', 'Primary Street', 'Lat', 'Lon']]
     
@@ -310,7 +310,7 @@ def main():
     #Display dataframe
     data_frame = df_filtered[['Account ID', 'Account Owner', 'Account Name', 'Account Type', 'Account Segment', 
        'Call Target', '# Visits', 'Call Rate', 'Last Visit',
-       'Days vo Visits',  'Coverage', 'Visited',
+       'Days wo Visits',  'Coverage', 'Visited',
        'Meters Placed', '# Orders', 'Last Order',
        'Brick Code', 'Brick Description', 'Primary State/Province', 'Primary City', 'Primary Street']]
     st.dataframe(data_frame,
