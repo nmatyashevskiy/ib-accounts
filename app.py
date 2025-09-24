@@ -128,7 +128,7 @@ def get_data(Rep_name):
 
 
     visits = visits[visits['Assigned'] == Rep_name]
-    visits['Date'] = visits['Date'].map(lambda x: pd.to_datetime(x))
+    visits['Date'] = visits['Date'].map(lambda x: pd.to_datetime(x, format='%d/%m/%Y'))
     visits_count = visits.groupby('Account ID').agg({'Date': 'nunique'}).reset_index()
     visits_count = visits_count.rename(columns={'Date': '# Visits'})
     visits_last = visits.groupby('Account ID').agg({'Date': 'max'}).reset_index()
@@ -147,7 +147,7 @@ def get_data(Rep_name):
     All_Accounts['Coverage'] = All_Accounts['# Visits'] / All_Accounts['Call Target']
     All_Accounts['Visited'] = All_Accounts['# Visits'].map(lambda x: "Yes" if x > 0 else "No")
 
-    meters_placed['Date'] = meters_placed['Date'].map(lambda x: pd.to_datetime(x))
+    meters_placed['Date'] = meters_placed['Date'].map(lambda x: pd.to_datetime(x, format='%d/%m/%Y'))
     orders_count = meters_placed.groupby('Account ID').agg({'Visit Product Id': 'nunique'}).reset_index()
     orders_count = orders_count.rename(columns={'Visit Product Id': '# Orders'})
     orders_last = meters_placed.groupby('Account ID').agg({'Date': 'max'}).reset_index()
