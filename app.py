@@ -261,6 +261,11 @@ def main():
                      &(df['Call Target'] >= target[0])
                      &(df['Call Target'] <= target[1])
                      &(df['Days vo Visits'] > underserved)]
+    df_filtered = df_filtered[['Account ID', 'Account Owner', 'Account Name', 'Account Type', 'Account Segment', 
+       'Call Target', '# Visits', 'Call Rate', 'Last Visit',
+       'Days vo Visits',  'Coverage', 'Visited',
+       'Meters Placed', '# Orders', 'Last Order',
+       'Brick Code', 'Brick Description', 'Primary State/Province', 'Primary City', 'Primary Street', 'Lat', 'Lon']]
     
     #Display success graph
     indicatorcolor = '#217346'
@@ -301,10 +306,22 @@ def main():
                                 data=buffer,
                                 file_name= 'Accounts.xlsx',
                                 mime='application/vnd.ms-excel')
-
+    
+    #Display dataframe
+    data_frame = df_filtered[['Account ID', 'Account Owner', 'Account Name', 'Account Type', 'Account Segment', 
+       'Call Target', '# Visits', 'Call Rate', 'Last Visit',
+       'Days vo Visits',  'Coverage', 'Visited',
+       'Meters Placed', '# Orders', 'Last Order',
+       'Brick Code', 'Brick Description', 'Primary State/Province', 'Primary City', 'Primary Street']]
+    st.dataframe(data_frame,
+                column_config={
+                'Coverage': st.column_config.NumberColumn(
+                     "Coverage",
+                     help="The percentage value",
+                     format="%.0f%%")},
+                hide_index=True)
 
 
 
 if __name__ == "__main__":
-
     main()
