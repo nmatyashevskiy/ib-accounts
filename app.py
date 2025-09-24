@@ -261,6 +261,7 @@ def main():
                      &(df['Call Target'] >= target[0])
                      &(df['Call Target'] <= target[1])
                      &(df['Days wo Visits'] > underserved)]
+    df_filtered['Coverage'] = df_filtered['Coverage'] * 100
     df_filtered = df_filtered[['Account ID', 'Account Owner', 'Account Name', 'Account Type', 'Account Segment', 
        'Call Target', '# Visits', 'Call Rate', 'Last Visit',
        'Days wo Visits',  'Coverage', 'Visited',
@@ -325,3 +326,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
