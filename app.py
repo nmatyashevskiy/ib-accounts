@@ -273,8 +273,8 @@ def main():
     hollowcolor = '#E2E2E2'
     size = 30
 
-    textvariable = int((df_filtered[df_filtered['# Visits']>0]['Account ID'].nunique()/df_filtered['Account ID'].nunique())*100)
-    arcvariable = (df_filtered[df_filtered['# Visits']>0]['Account ID'].nunique()/df_filtered['Account ID'].nunique())*220
+    textvariable = int((df_filtered[df_filtered['# Visits']>0]['Account ID'].nunique()/df_filtered['Account ID'].nunique())*100 if df_filtered['Account ID'].nunique()>0 else 0)
+    arcvariable = (df_filtered[df_filtered['# Visits']>0]['Account ID'].nunique()/df_filtered['Account ID'].nunique())*220 if df_filtered['Account ID'].nunique()>0 else 0
     if textvariable >=100:
         text_x = 380
         angle = 380
